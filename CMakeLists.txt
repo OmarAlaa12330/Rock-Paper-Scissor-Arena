@@ -3,13 +3,19 @@
 
 
 cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
-project(example)
+project(rock-paper-scissors-arena)
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set the include directory for the project
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+set(HEADER_FILES
+        include/config.hpp
+)
+
+set(SOURCE_FILES
+        src/TextureManager.cpp
+)
 
 # Collect all source files recursively from the /src directory
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
@@ -33,7 +39,9 @@ if (NOT raylib_FOUND)
     endif()
 endif()
 
-# Create the executable from the source files
-add_executable(${PROJECT_NAME} main.cpp ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} raylib)
+# Copy assets to the build directory during the configuration stage
+file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
 
+# Create the executable from the source files
+add_executable(${PROJECT_NAME} main.cpp ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(${PROJECT_NAME} raylib)
