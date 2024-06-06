@@ -8,11 +8,13 @@ project(rock-paper-scissors-arena)
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
+# Header files here
 set(HEADER_FILES
+        include/TextureManager.hpp
         include/config.hpp
 )
 
+# Source files here
 set(SOURCE_FILES
         src/TextureManager.cpp
 )
